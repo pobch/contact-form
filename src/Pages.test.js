@@ -25,3 +25,15 @@ test('Landing on a bad page shows 404 page', () => {
   )
   expect(getByText(/404 not found/i)).toBeInTheDocument()
 })
+
+test('rendering a component that uses withRouter', () => {
+  const history = createMemoryHistory()
+  const route = '/some-route'
+  history.push(route)
+  const { getByTestId } = render(
+    <Router history={history}>
+      <Pages />
+    </Router>
+  )
+  expect(getByTestId('location-display').textContent).toBe(route)
+})
