@@ -1,6 +1,7 @@
 import React from 'react'
 import { Formik } from 'formik'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 import DefaultInputField from './InputField'
 import DefaultSelectField from './SelectField'
 import DefaultTextAreaField from './TextAreaField'
@@ -70,6 +71,8 @@ const ScOptionalText = styled.span`
 function Contact() {
   return (
     <ScFlexWrapper>
+      <span>Pages: </span>
+      <Link to="/">Home</Link>
       <ScHeadIcon src={BALLOON} alt="" />
       <ScHeader>Contact Us</ScHeader>
       <Formik
