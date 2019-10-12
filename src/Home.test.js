@@ -1,12 +1,12 @@
 import React from 'react'
 import { render } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
-import App from './App'
+import Home from './Home'
 
-test('App is rendered', () => {
+test('Menu in Home is rendered', () => {
   const { getByText } = render(
     <BrowserRouter>
-      <App />
+      <Home />
     </BrowserRouter>
   )
   expect(getByText(/contact/i)).toBeInTheDocument()

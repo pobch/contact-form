@@ -1,16 +1,16 @@
 import React from 'react'
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
-import App from './App'
+import { Switch, Route } from 'react-router-dom'
+import Home from './Home'
 import Contact from './Contact'
+import NotFound from './NotFound'
 
 function Pages() {
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/" component={App} />
-        <Route exact path="/contact" component={Contact} />
-      </Switch>
-    </BrowserRouter>
+    <Switch>
+      <Route exact path="/" component={Home} />
+      <Route exact path="/contact" component={Contact} />
+      <Route component={NotFound} />
+    </Switch>
   )
 }
 
