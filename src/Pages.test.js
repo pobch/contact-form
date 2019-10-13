@@ -1,3 +1,4 @@
+import '@testing-library/jest-dom/extend-expect'
 import React from 'react'
 import { render, fireEvent } from '@testing-library/react'
 import { createMemoryHistory } from 'history'
@@ -26,7 +27,7 @@ test('Landing on a bad page shows 404 page', () => {
   expect(getByText(/404 not found/i)).toBeInTheDocument()
 })
 
-test('rendering a component that uses withRouter', () => {
+test('Rendering a component that uses withRouter', () => {
   const history = createMemoryHistory()
   const route = '/some-route'
   history.push(route)
