@@ -1,14 +1,9 @@
 import React from 'react'
-import { Switch, Route, withRouter } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 import Home from './Home'
 import Contact from './Contact'
 import NotFound from './NotFound'
-
-const LocationDisplay = withRouter(({ location }) => (
-  <div style={{ position: 'fixed', bottom: 0 }} data-testid="location-display">
-    {location.pathname}
-  </div>
-))
+import LocationDisplay from './LocationDisplay'
 
 function Pages() {
   return (
