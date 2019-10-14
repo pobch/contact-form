@@ -63,11 +63,12 @@ const ScError = styled.div.attrs({
 `
 
 const SelectField = props => {
-  const { name, onChange, onBlur, value, errMsg, touchState, className } = props
+  const { id, name, onChange, onBlur, value, errMsg, touchState, className } = props
 
   return (
     <div className={className}>
       <ScSelect
+        id={id}
         onChange={onChange}
         onBlur={onBlur}
         value={value}

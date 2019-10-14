@@ -64,10 +64,22 @@ const ScError = styled.div.attrs({
 `
 
 const InputField = props => {
-  const { type, onChange, onBlur, value, name, placeholder, errMsg, touchState, className } = props
+  const {
+    id,
+    type,
+    onChange,
+    onBlur,
+    value,
+    name,
+    placeholder,
+    errMsg,
+    touchState,
+    className
+  } = props
   return (
     <ScFieldWrapper className={className}>
       <ScInput
+        id={id}
         type={type}
         value={value}
         onChange={onChange}

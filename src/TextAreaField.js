@@ -52,10 +52,11 @@ const ScError = styled.div.attrs({
 `
 
 const TextAreaField = props => {
-  const { name, onChange, onBlur, value, placeholder, errMsg, touchState, className } = props
+  const { id, name, onChange, onBlur, value, placeholder, errMsg, touchState, className } = props
   return (
     <div className={className}>
       <ScTextArea
+        id={id}
         value={value}
         onChange={onChange}
         onBlur={onBlur}

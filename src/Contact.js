@@ -46,9 +46,10 @@ const ScHeader = styled.h1`
   `}
 `
 
-const ScLabel = styled.div.attrs({
+const ScLabel = styled.label.attrs({
   className: 'font-body'
 })`
+  display: block;
   margin-bottom: 10px;
 `
 
@@ -88,8 +89,9 @@ function Contact() {
         render={({ handleSubmit, handleChange, handleBlur, values, errors, isValid, touched }) => {
           return (
             <form onSubmit={handleSubmit}>
-              <ScLabel>Select a Contact</ScLabel>
+              <ScLabel htmlFor="category">Select a Contact</ScLabel>
               <SelectField
+                id="category"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.contactCategory}
@@ -103,8 +105,9 @@ function Contact() {
                     : TOUCH_STATE.UNTOUCH
                 }
               />
-              <ScLabel>Subject</ScLabel>
+              <ScLabel htmlFor="subject">Subject</ScLabel>
               <InputField
+                id="subject"
                 type="text"
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -120,10 +123,11 @@ function Contact() {
                     : TOUCH_STATE.UNTOUCH
                 }
               />
-              <ScLabel>
+              <ScLabel htmlFor="name">
                 Name <ScOptionalText>(optional)</ScOptionalText>
               </ScLabel>
               <InputField
+                id="name"
                 type="text"
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -139,8 +143,9 @@ function Contact() {
                     : TOUCH_STATE.UNTOUCH
                 }
               />
-              <ScLabel>E-mail</ScLabel>
+              <ScLabel htmlFor="email">E-mail</ScLabel>
               <InputField
+                id="email"
                 type="email"
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -156,10 +161,11 @@ function Contact() {
                     : TOUCH_STATE.UNTOUCH
                 }
               />
-              <ScLabel>
+              <ScLabel htmlFor="phone">
                 Phone <ScOptionalText>(optional)</ScOptionalText>
               </ScLabel>
               <InputField
+                id="phone"
                 type="tel"
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -175,8 +181,9 @@ function Contact() {
                     : TOUCH_STATE.UNTOUCH
                 }
               />
-              <ScLabel>Comments/Questions</ScLabel>
+              <ScLabel htmlFor="question">Comments/Questions</ScLabel>
               <TextAreaField
+                id="question"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.question}
