@@ -16,6 +16,8 @@ test('Submit button start as disabled', () => {
 })
 
 test('Can fill out every input field and submit', async () => {
+  // Other than .spyOn(), we also need to .mockImplementation() because jest does not
+  // provide window.alert() method.
   const spy = jest.spyOn(window, 'alert').mockImplementation(() => {})
 
   const history = createMemoryHistory()
@@ -47,4 +49,33 @@ test('Can fill out every input field and submit', async () => {
     { timeout: 1000 }
   )
   spy.mockRestore()
+})
+
+test('All field validations work and error messages appear', async () => {
+  const history = createMemoryHistory()
+  const { getByLabelText, getByText } = render(
+    <Router history={history}>
+      <Contact />
+    </Router>
+  )
+  fireEvent.change(getByLabelText(/subject/i), { target: { value: '' } })
+  fireEvent.change(getByLabelText(/mail/i), { target: { value: 'something' } })
+  fireEvent.change(getByLabelText(/phone/i), { target: { value: 'not a number' } })
+  fireEvent.change(getByLabelText(/question/i), { target: { value: '' } })
+
+  // click somewhere to trigger onBlur event
+  fireEvent.click(getByText(/submit/i))
+
+  await wait(
+    () => {
+      expect(getByText(/please include a subject/i)).toBeInTheDocument()
+      expect(getByText(/please enter a valid e-mail/i)).toBeInTheDocument()
+      expect(getByText(/please enter a valid phone/i)).toBeInTheDocument()
+      expect(getByText(/please enter your comment/i)).toBeInTheDocument()
+    },
+    {
+      timeout: 1000
+    }
+  )
+  expect(getByText(/submit/i)).toBeDisabled()
 })
