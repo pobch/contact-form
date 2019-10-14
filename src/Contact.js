@@ -7,7 +7,8 @@ import DefaultSelectField from './SelectField'
 import DefaultTextAreaField from './TextAreaField'
 import { SubmitButton } from './SubmitButton'
 import { COLORS, MEDIA } from './utils/styles'
-import { contactUsValues, contactUsValidator, TOUCH_STATE } from './utils/forms'
+import { contactUsValues, TOUCH_STATE } from './utils/forms'
+import { validator } from './utils/validator'
 import BALLOON from './images/Balloons.svg'
 
 const ScFlexWrapper = styled.div`
@@ -78,7 +79,7 @@ function Contact() {
       <ScHeader>Contact Us</ScHeader>
       <Formik
         initialValues={contactUsValues}
-        validate={contactUsValidator}
+        validate={validator}
         onSubmit={(values, actions) => {
           let result = ''
           for (let key in values) {

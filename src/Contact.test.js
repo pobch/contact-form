@@ -58,13 +58,13 @@ test('All field validations work and error messages appear', async () => {
       <Contact />
     </Router>
   )
-  fireEvent.change(getByLabelText(/subject/i), { target: { value: '' } })
-  fireEvent.change(getByLabelText(/mail/i), { target: { value: 'something' } })
-  fireEvent.change(getByLabelText(/phone/i), { target: { value: 'not a number' } })
-  fireEvent.change(getByLabelText(/question/i), { target: { value: '' } })
 
-  // click somewhere to trigger onBlur event
-  fireEvent.click(getByText(/submit/i))
+  fireEvent.blur(getByLabelText(/subject/i))
+  fireEvent.change(getByLabelText(/mail/i), { target: { value: 'something' } })
+  fireEvent.blur(getByLabelText(/mail/i))
+  fireEvent.change(getByLabelText(/phone/i), { target: { value: 'not a number' } })
+  fireEvent.blur(getByLabelText(/phone/i))
+  fireEvent.blur(getByLabelText(/question/i))
 
   await wait(
     () => {
@@ -79,3 +79,22 @@ test('All field validations work and error messages appear', async () => {
   )
   expect(getByText(/submit/i)).toBeDisabled()
 })
+
+// test('Just try jest.mock feature', async () => {
+//   jest.doMock('./utils/validator', () => {
+//     return {
+//       validator: jest.fn()
+//     }
+//   })
+//   const { validator: mockValidator } = require('./utils/validator')
+//   const history = createMemoryHistory()
+//   const { getByLabelText, getByText, debug } = render(
+//     <Router history={history}>
+//       <Contact />
+//     </Router>
+//   )
+
+//   fireEvent.blur(getByLabelText(/subject/i))
+
+//   await wait(() => expect(mockValidator).toHaveBeenCalledTimes(2), { timeout: 500 })
+// })
