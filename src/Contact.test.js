@@ -4,7 +4,20 @@ import { render, fireEvent, wait } from '@testing-library/react'
 import { Router } from 'react-router-dom'
 import { createMemoryHistory } from 'history'
 import Contact from './Contact'
+import { validator as mockValidator } from './utils/validator'
 
+// MOCK
+jest.mock('./utils/validator', () => {
+  return {
+    validator: jest.fn()
+  }
+})
+
+afterEach(() => {
+  mockValidator.mockClear()
+})
+
+// TEST
 test('Submit button start as disabled', () => {
   const history = createMemoryHistory()
   const { getByText } = render(
@@ -52,6 +65,9 @@ test('Can fill out every input field and submit', async () => {
 })
 
 test('All field validations work and error messages appear', async () => {
+  // Restore mock only for this test()
+  mockValidator.mockImplementation(require.requireActual('./utils/validator').validator)
+
   const history = createMemoryHistory()
   const { getByLabelText, getByText } = render(
     <Router history={history}>
@@ -80,21 +96,15 @@ test('All field validations work and error messages appear', async () => {
   expect(getByText(/submit/i)).toBeDisabled()
 })
 
-// test('Just try jest.mock feature', async () => {
-//   jest.doMock('./utils/validator', () => {
-//     return {
-//       validator: jest.fn()
-//     }
-//   })
-//   const { validator: mockValidator } = require('./utils/validator')
-//   const history = createMemoryHistory()
-//   const { getByLabelText, getByText, debug } = render(
-//     <Router history={history}>
-//       <Contact />
-//     </Router>
-//   )
+test('Just try jest.mock feature', async () => {
+  const history = createMemoryHistory()
+  const { getByLabelText, getByText, debug } = render(
+    <Router history={history}>
+      <Contact />
+    </Router>
+  )
 
-//   fireEvent.blur(getByLabelText(/subject/i))
+  fireEvent.blur(getByLabelText(/subject/i))
 
-//   await wait(() => expect(mockValidator).toHaveBeenCalledTimes(2), { timeout: 500 })
-// })
+  await wait(() => expect(mockValidator).toHaveBeenCalledTimes(1), { timeout: 500 })
+})
