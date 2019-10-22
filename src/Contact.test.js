@@ -15,6 +15,7 @@ jest.mock('./utils/validator', () => {
 
 afterEach(() => {
   mockValidator.mockClear()
+  mockValidator.mockRestore() // Remove the effect of .mockImplementation() if any
 })
 
 // TEST
@@ -66,6 +67,7 @@ test('Can fill out every input field and submit', async () => {
 
 test('All field validations work and error messages appear', async () => {
   // Restore mock only for this test()
+  // Note: .mockImplementation() and .mockImplementationOnce() have different mechanism
   mockValidator.mockImplementation(require.requireActual('./utils/validator').validator)
 
   const history = createMemoryHistory()
