@@ -15,11 +15,13 @@ jest.mock('./utils/validator', () => {
 
 afterEach(() => {
   mockValidator.mockClear()
-  mockValidator.mockRestore() // Remove the effect of .mockImplementation() if any
+  mockValidator.mockReset() // Remove the effect of .mockImplementation() if any
 })
 
 // TEST
 test('Submit button start as disabled', () => {
+  console.log(mockValidator.getMockImplementation()) // for debug jest.mock()
+
   const history = createMemoryHistory()
   const { getByText } = render(
     <Router history={history}>
@@ -30,6 +32,8 @@ test('Submit button start as disabled', () => {
 })
 
 test('Can fill out every input field and submit', async () => {
+  console.log(mockValidator.getMockImplementation()) // for debug jest.mock()
+
   // Other than .spyOn(), we also need to .mockImplementation() because jest does not
   // provide window.alert() method.
   const spy = jest.spyOn(window, 'alert').mockImplementation(() => {})
@@ -67,8 +71,12 @@ test('Can fill out every input field and submit', async () => {
 
 test('All field validations work and error messages appear', async () => {
   // Restore mock only for this test()
-  // Note: .mockImplementation() and .mockImplementationOnce() have different mechanism
+  // Note: If we use .mockImplementationOnce(), this test case will fail
+  //  because .mockImplementationOnce() mocks the target function once per call, not per test case.
+  //  And in this single test case, we call mockValidator multiple times
   mockValidator.mockImplementation(require.requireActual('./utils/validator').validator)
+
+  console.log(mockValidator.getMockImplementation()) // for debug jest.mock()
 
   const history = createMemoryHistory()
   const { getByLabelText, getByText } = render(
@@ -99,6 +107,8 @@ test('All field validations work and error messages appear', async () => {
 })
 
 test('Just try jest.mock feature', async () => {
+  console.log(mockValidator.getMockImplementation()) // for debug jest.mock()
+
   const history = createMemoryHistory()
   const { getByLabelText, getByText, debug } = render(
     <Router history={history}>
